@@ -76,6 +76,12 @@
 .padding-left-0{
 	padding-left:0 !important;
 }
+.position-relative{
+	position:relative;
+}
+.font-style-italic{
+	font-style:italic;
+}
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {

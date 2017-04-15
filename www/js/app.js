@@ -1,4 +1,4 @@
-angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
+angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
@@ -41,7 +41,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
     }
   });
 })
-.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal){
+.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce){
 	 $scope.showLoader = function() {
 		$ionicLoading.show({
                 content: 'Loading',
@@ -190,10 +190,15 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
     });
 	
 	$scope.nativeShare=function(file){
-		$scope.showLoader();
-		window.plugins.socialsharing.share('', '', file,function(){$scope.hideLoader();});
+		if(window.plugins.socialsharing){
+			$scope.showLoader();
+			window.plugins.socialsharing.share('', '', file,function(){$scope.hideLoader();},function(){$scope.hideLoader();});
+		}
 	};
 	
+	$scope.trustSrc = function(src) {
+		return $sce.trustAsResourceUrl(src);
+	}
 	
 }).filter('dateText', function(dateFilter) {
   return function(input,isMS) {
@@ -205,15 +210,15 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
     delta=(delta<2)?2:delta;
     var r = '';
     if (delta < 60) {
-    r = delta + ' seconds ago';
+    r = delta + ' secs ago';
     } else if(delta < 120) {
-    r = 'a minute ago';
+    r = 'a mins ago';
     } else if(delta < (45*60)) {
     r = (parseInt(delta / 60, 10)).toString() + ' minutes ago';
     } else if(delta < (2*60*60)) {
-    r = 'an hour ago';
+    r = 'an hr ago';
     } else if(delta < (24*60*60)) {
-    r = '' + (parseInt(delta / 3600, 10)).toString() + ' hours ago';
+    r = '' + (parseInt(delta / 3600, 10)).toString() + ' hrs ago';
     } else if(delta < (48*60*60)) {
     r = 'a day ago';
     } else {

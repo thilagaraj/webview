@@ -13,23 +13,24 @@
   </div>
 
   <div class="item item-image">
-    <img src="{{up.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.images[0].url)" image-lazy-loader="android"/>
+  ​  <video ng-if="up.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer">
+		<source src="{{trustSrc(up.videos[0].url)}}" type="video/mp4"/>
+	</video>
+    <img ng-if="up.mediaType===1" src="{{up.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.images[0].url)" image-lazy-loader="android"/>
 	<p  class="item-body">{{up.caption}}</p>
 	
   </div>  
 	<div class="row">
 	  <div class="col">
-		<a class="item item-icon-left assertive custom-assertive" ng-click="download(up.images[0].url)" >
+		<a class="item item-icon-left assertive custom-assertive " ng-click="download(up.mediaType===2 ? trustSrc(up.videos[0].url) : up.images[0].url))" >
 		<i class="icon ion-archive"></i></a>
 	  </div>
-	   <div class="col"><a ng-click="nativeShare(up.images[0].url)" class="item item-icon-right assertive custom-assertive padding-left-0" >
+	   <div class="col"><a ng-click="nativeShare(up.images[0].url)" class="item item-icon-left assertive custom-assertive padding-left-0" >
 		<i class="icon ion-share"></i></a></div>
-	   <div class="col"></div>
-	   <div class="col"><a  class="item assertive custom-assertive padding-10">{{up.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
-	   <div class="col"><a class="item assertive custom-assertive padding-10">{{up.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
-	   <div class="col"></div>
+	   <div class="col"><a  class="item assertive custom-assertive padding-10 padding-left-0">{{up.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10 padding-left-0">{{up.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
 	   <div class="col">
-		<a class="item item-icon-right assertive custom-assertive" href="#/viewMedia/{{up.id}}">
+		<a class="item item-icon-right assertive custom-assertive padding-left-0" href="#/viewMedia/{{up.id}}">
 		<i class="icon ion-arrow-right-c"></i></a>
 	  </div>
 	</div>

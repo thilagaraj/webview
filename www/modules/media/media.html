@@ -8,17 +8,19 @@
 <div class="list card" ng-if="mediaDetails">
 
   <div class="item item-image">
-    <img src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
+	 <video ng-if="mediaDetails.postInfo.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer">
+		<source src="{{trustSrc(mediaDetails.postInfo.videos[0].url)}}" type="video/mp4"/>
+	</video>
+    <img ng-if="mediaDetails.postInfo.mediaType===1"  src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
 	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>	
   </div>  
 	<div class="row">
-	   <div class="col"><a  class="item assertive custom-assertive padding-10 padding-left-0">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
-	   <div class="col"><a class="item assertive custom-assertive padding-10 padding-left-0">{{mediaDetails.postInfo.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
-	   <div class="col"><a class="item assertive custom-assertive padding-10 padding-left-0"><i class="icon ion-android-time"></i> {{mediaDetails.postInfo.takenAt | dateText:true}}</a></div>
-	    <div class="col"><a ng-click="nativeShare(mediaDetails.postInfo.images[0].url)" class="item item-icon-right assertive custom-assertive padding-left-0" >
+	   <div class="col"><a  class="item assertive custom-assertive padding-10 ">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10 "><i class="icon ion-android-time"></i> {{mediaDetails.postInfo.takenAt | dateText:true}}</a></div>
+	    <div class="col"><a ng-click="nativeShare(mediaDetails.postInfo.images[0].url)" class="item item-icon-right assertive custom-assertive" >
 		<i class="icon ion-share"></i></a></div>
 	   <div class="col">
-		<a class="item item-icon-right assertive custom-assertive padding-left-0" ng-click="download(mediaDetails.postInfo.images[0].url)" >
+		<a class="item item-icon-right assertive custom-assertive padding-left-0" ng-click="download((mediaDetails.postInfo.mediaType===2 ? trustSrc(mediaDetails.postInfo.videos[0].url) :  mediaDetails.postInfo.images[0].url))" >
 		<i class="icon ion-archive"></i></a>
 	  </div>
 	  
@@ -42,11 +44,11 @@
 <div class="card" ng-if="mediaComments && mediaComments.length>0">
 	<ul class="list">
 		<li class="item" ng-repeat="mc in mediaComments">
-			<div class=" item-avatar">
+			<div class="item-avatar">
 				<img src="{{mc.userInfo.picture}}" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) : showImage(mc.userInfo.picture))"/>
 				<h2 class="positive" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) :'' )">@{{mc.userInfo.username}}</h2>
 				<p>{{mc.text.created | dateText}}</p>
-				<p>{{mc.text.text}}</p>
+				<p><i class="icon ion-chatbubbles"></i> &nbsp;<span class="font-style-italic">{{mc.text.text}}</span></p>
 			</div>
 		</li>
 	</ul>	
