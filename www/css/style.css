@@ -1,0 +1,85 @@
+/* Empty. Add your own CSS if you like */
+.home.scroll-content {
+  display: table !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.home .scroll {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.progress {
+    margin: 0px;
+    height: 8px;
+    background-color: #F1292B!important;
+    border-radius: 2px;
+    box-shadow: 02px 5px rgba(0, 0, 0, 0.25) inset;
+}
+.assertive.custom-assertive, a.assertive.custom-assertive {
+    color: #387ef5;
+	line-height:0;
+}
+.assertive.custom-assertive.padding-10{
+	padding:10px 10px 5px 10px;
+}
+.custom-assertive.activated, a.custom-assertive.activated {
+    background:#fff;
+}
+.bar{
+	height:54px;
+}
+.platform-android .bar .title{
+	line-height:54px;
+}
+.transparent {
+  background: transparent !important;
+}
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}
+.fullscreen-image {
+  max-width: 90%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+.modal .image-loader-container{
+  margin: 9px;
+  max-width: 51px;
+  max-height: 51px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  position: fixed;
+  background:transparent;
+  background:#222;
+  border-radius:5px;
+  text-align:center;
+  line-height:71px;
+}
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5;
+  }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}

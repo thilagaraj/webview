@@ -1,0 +1,39 @@
+
+ <ion-view cache-view=true>
+	 <ion-nav-title ng-show="userDetails.userInfo.username">@{{userDetails.userInfo.username}}</ion-nav-title>
+	 <div class="bar bar-subheader bar-positive" style="padding:0px;height: 8px;" ng-show="downloadProgress">
+        <progress id="progressbar" max="100" value="{{ downloadProgress }}" class="progress"> </progress>
+    </div>
+	<ion-content class="padding">
+<div class="list card" ng-repeat="up in userDetails.postList">
+<div class="item item-avatar">
+    <img src="{{userDetails.userInfo.picture}}" />
+    <h2>{{userDetails.userInfo.fullName}}</h2>
+    <p>@{{userDetails.userInfo.username}}</p>
+  </div>
+
+  <div class="item item-image">
+    <img src="{{up.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.images[0].url)" image-lazy-loader="android"/>
+	<p  class="item-body">{{up.caption}}</p>
+	
+  </div>  
+	<div class="row">
+	  <div class="col">
+		<a class="item item-icon-left assertive custom-assertive" ng-click="download(up.images[0].url)" >
+		<i class="icon ion-archive"></i></a>
+	  </div>
+	   <div class="col"></div>
+	   <div class="col"><a  class="item assertive custom-assertive padding-10">{{up.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10">{{up.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
+	   <div class="col"></div>
+	   <div class="col">
+		<a class="item item-icon-right assertive custom-assertive" href="#/viewMedia/{{up.id}}">
+		<i class="icon ion-arrow-right-c"></i></a>
+	  </div>
+	</div>
+  
+
+</div>
+<div class="alert" ng-if="userDetails && userDetails.postList.length<=0"><b>Nothing posted.</b></div>
+	</ion-content>
+  </ion-view>

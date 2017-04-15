@@ -1,0 +1,18 @@
+ <ion-view hide-nav-bar="true">
+	<ion-content class="padding home">
+	<div class="text-center">
+		<img src="img/quicksta.png" style="width:21%;" alt="Quicksta"/>
+		<h1>Quicksta</h1>
+		<h6>Instagram Quick Search</h6>		
+	</div>
+	<div class="list list-inset">
+	  <label class="item item-input">
+		<i class="icon ion-search placeholder-icon"></i>
+		<input type="text" placeholder="Search user, tag and location" name="q" ng-model="q">
+	  </label>
+	</div>
+	<div class="text-center">
+	  <a class="button button-positive " ng-click="search(q)">Search</a>
+	</div>
+	</ion-content>
+  </ion-view>

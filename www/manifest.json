@@ -1,0 +1,11 @@
+{
+  "name": "Quicksta",
+  "short_name": "Quicksta",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "quicksta.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}

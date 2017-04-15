@@ -1,0 +1,24 @@
+ <ion-view cache-view=true>
+	 <ion-nav-title>Search - {{q}}</ion-nav-title>
+	<ion-content class="padding">
+	<div class="list card" ng-repeat="user in users" ng-if="!user.isPrivate">
+	  <div class="item item-avatar">
+		<img src="{{user.picture}}" ng-click="showImage(user.picture)">
+		<h2>@{{user.username}}</h2>
+		<p>{{user.fullName}}</p>
+	  </div>
+	  <div class="row">
+		<div class="col col-80">
+			<a class="item positive assertive custom-assertive item-icon-left"> <i class="icon ion-ios-people"></i>&nbsp;{{user.followerCount|abbreviated}} followers</a>
+		</div>
+		<div class="col col-20">
+			 <a class="item positive item-icon-right custom-assertive" href="#/viewUser/{{user.id}}">
+				<i class="icon ion-arrow-right-c"></i>
+			 </a>
+		</div>
+	  </div>
+	 
+	</div>
+	  
+	</ion-content>
+  </ion-view>

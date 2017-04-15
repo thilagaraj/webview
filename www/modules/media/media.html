@@ -1,0 +1,60 @@
+
+ <ion-view cache-view=true>
+	 <ion-nav-title ng-show="mediaDetails.userInfo.username">@{{mediaDetails.userInfo.username}}</ion-nav-title>
+	 <div class="bar bar-subheader bar-positive" style="padding:0px;height: 8px;" ng-show="downloadProgress">
+        <progress id="progressbar" max="100" value="{{ downloadProgress }}" class="progress"> </progress>
+    </div>
+	<ion-content class="padding">
+<div class="list card" ng-if="mediaDetails">
+
+  <div class="item item-image">
+    <img src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
+	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>
+	
+  </div>  
+	<div class="row">
+	   <div class="col"><a  class="item assertive custom-assertive padding-10">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10">{{mediaDetails.postInfo.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10"><i class="icon ion-android-time"></i> {{mediaDetails.postInfo.takenAt | dateText:true}}</a></div>
+	   <div class="col">
+		<a class="item item-icon-right assertive custom-assertive" ng-click="download(mediaDetails.postInfo.images[0].url)" >
+		<i class="icon ion-archive"></i></a>
+	  </div>
+	</div>
+</div>
+<div class="list card" ng-if="mediaDetails && mediaDetails.location && mediaDetails.location.length>0">
+	<div class="item">
+		<div class="row">
+			<div class="col col-20">
+				<a class="item item-icon-left assertive custom-assertive">
+				<i class="icon ion-android-pin"></i></a>
+			</div>
+			<div class="col">
+				<h2>{{mediaDetails.location.title}}</h2>
+				<p>{{mediaDetails.location.address}}, {{mediaDetails.location.city}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card" ng-if="mediaComments && mediaComments.length>0">
+	<ul class="list">
+		<li class="item" ng-repeat="mc in mediaComments">
+			<div class=" item-avatar">
+				<img src="{{mc.userInfo.picture}}" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) : showImage(mc.userInfo.picture))"/>
+				<h2 class="positive" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) :'' )">@{{mc.userInfo.username}}</h2>
+				<p>{{mc.text.created | dateText}}</p>
+				<p>{{mc.text.text}}</p>
+			</div>
+		</li>
+	</ul>	
+</div>
+
+
+
+
+
+
+<div class="alert" ng-if="userDetails && userDetails.postList.length<=0"><b>Nothing posted.</b></div>
+	</ion-content>
+  </ion-view>
