@@ -70,7 +70,12 @@
   text-align:center;
   line-height:71px;
 }
-
+.margin-top-5{
+	margin-top:5px;
+}
+.padding-left-0{
+	padding-left:0 !important;
+}
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {

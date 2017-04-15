@@ -9,17 +9,19 @@
 
   <div class="item item-image">
     <img src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
-	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>
-	
+	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>	
   </div>  
 	<div class="row">
-	   <div class="col"><a  class="item assertive custom-assertive padding-10">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
-	   <div class="col"><a class="item assertive custom-assertive padding-10">{{mediaDetails.postInfo.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
-	   <div class="col"><a class="item assertive custom-assertive padding-10"><i class="icon ion-android-time"></i> {{mediaDetails.postInfo.takenAt | dateText:true}}</a></div>
+	   <div class="col"><a  class="item assertive custom-assertive padding-10 padding-left-0">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10 padding-left-0">{{mediaDetails.postInfo.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
+	   <div class="col"><a class="item assertive custom-assertive padding-10 padding-left-0"><i class="icon ion-android-time"></i> {{mediaDetails.postInfo.takenAt | dateText:true}}</a></div>
+	    <div class="col"><a ng-click="nativeShare(mediaDetails.postInfo.images[0].url)" class="item item-icon-right assertive custom-assertive padding-left-0" >
+		<i class="icon ion-share"></i></a></div>
 	   <div class="col">
-		<a class="item item-icon-right assertive custom-assertive" ng-click="download(mediaDetails.postInfo.images[0].url)" >
+		<a class="item item-icon-right assertive custom-assertive padding-left-0" ng-click="download(mediaDetails.postInfo.images[0].url)" >
 		<i class="icon ion-archive"></i></a>
 	  </div>
+	  
 	</div>
 </div>
 <div class="list card" ng-if="mediaDetails && mediaDetails.location && mediaDetails.location.length>0">

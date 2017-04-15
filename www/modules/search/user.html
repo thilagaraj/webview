@@ -7,7 +7,7 @@
 	<ion-content class="padding">
 <div class="list card" ng-repeat="up in userDetails.postList">
 <div class="item item-avatar">
-    <img src="{{userDetails.userInfo.picture}}" />
+    <img src="{{userDetails.userInfo.picture}}" ng-click="showImage(userDetails.userInfo.picture)"/>
     <h2>{{userDetails.userInfo.fullName}}</h2>
     <p>@{{userDetails.userInfo.username}}</p>
   </div>
@@ -22,6 +22,8 @@
 		<a class="item item-icon-left assertive custom-assertive" ng-click="download(up.images[0].url)" >
 		<i class="icon ion-archive"></i></a>
 	  </div>
+	   <div class="col"><a ng-click="nativeShare(up.images[0].url)" class="item item-icon-right assertive custom-assertive padding-left-0" >
+		<i class="icon ion-share"></i></a></div>
 	   <div class="col"></div>
 	   <div class="col"><a  class="item assertive custom-assertive padding-10">{{up.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
 	   <div class="col"><a class="item assertive custom-assertive padding-10">{{up.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>

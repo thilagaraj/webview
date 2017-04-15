@@ -189,6 +189,12 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
       $scope.modal.remove();
     });
 	
+	$scope.nativeShare=function(file){
+		$scope.showLoader();
+		window.plugins.socialsharing.share('', '', file,function(){$scope.hideLoader();});
+	};
+	
+	
 }).filter('dateText', function(dateFilter) {
   return function(input,isMS) {
 	  input=(isMS ? input : input*1000);
