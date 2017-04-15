@@ -74,23 +74,29 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad'])
 			$scope.hideLoader();
 		});		
 	}
-	function getUserDetailCallback(data){		
-		$http.get('https://quicksta.herokuapp.com/user/media/'+data.stateParams.user).then(function(response){			
-			$scope.userDetails=response.data;
-			$scope.hideLoader();
-		});		
+	function getUserDetailCallback(data){	
+		if(data.stateParams.user){	
+			$http.get('https://quicksta.herokuapp.com/user/media/'+data.stateParams.user).then(function(response){			
+				$scope.userDetails=response.data;
+				$scope.hideLoader();
+			});	
+		}
 	}
-	function getMediaDetailCallback(data){		
-		$http.get('https://quicksta.herokuapp.com/media/'+data.stateParams.mediaId).then(function(response){			
-			$scope.mediaDetails=response.data;
-			$scope.hideLoader();
-		});		
+	function getMediaDetailCallback(data){	
+		if(data.stateParams.mediaId){
+			$http.get('https://quicksta.herokuapp.com/media/'+data.stateParams.mediaId).then(function(response){			
+				$scope.mediaDetails=response.data;
+				$scope.hideLoader();
+			});
+		}
 	}
-	function getMediaCommentsCallback(data){		
-		$http.get('https://quicksta.herokuapp.com/media/comments/'+data.stateParams.mediaId).then(function(response){			
-			$scope.mediaComments=response.data;
-			$scope.hideLoader();
-		});		
+	function getMediaCommentsCallback(data){	
+		if(data.stateParams.mediaId){
+			$http.get('https://quicksta.herokuapp.com/media/comments/'+data.stateParams.mediaId).then(function(response){			
+				$scope.mediaComments=response.data;
+				$scope.hideLoader();
+			});	
+		}		
 	}
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		if(data.stateName!=='home'){

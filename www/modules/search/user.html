@@ -1,9 +1,9 @@
 
  <ion-view cache-view=true>
 	 <ion-nav-title ng-show="userDetails.userInfo.username">@{{userDetails.userInfo.username}}</ion-nav-title>
-	 <div class="bar bar-subheader bar-positive" style="padding:0px;height: 8px;" ng-show="downloadProgress">
-        <progress id="progressbar" max="100" value="{{ downloadProgress }}" class="progress"> </progress>
-    </div>
+		<ion-nav-buttons side="right">
+			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
+		</ion-nav-buttons>
 	<ion-content class="padding">
 <div class="list card" ng-repeat="up in userDetails.postList">
 <div class="item item-avatar">
