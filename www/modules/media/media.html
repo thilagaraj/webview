@@ -8,10 +8,10 @@
 <div class="list card" ng-if="mediaDetails">
 
   <div class="item item-image">
-	 <video ng-if="mediaDetails.postInfo.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer width-100-percent" poster="{{mediaDetails.postInfo.images[0].url}}">
-		<source src="{{trustSrc(mediaDetails.postInfo.videos[0].url)}}" type="video/mp4"/>
+	 <video ng-if="mediaDetails.postInfo.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer width-100-percent" ng-poster="mediaDetails.postInfo.images[0].url">
+		<source ng-src="{{trustSrc(mediaDetails.postInfo.videos[0].url)}}" type="video/mp4"/>
 	</video>
-    <img ng-if="mediaDetails.postInfo.mediaType===1"  src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
+    <img ng-if="mediaDetails.postInfo.mediaType===1"  ng-src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
 	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>	
   </div>  
 	<div class="row">
@@ -45,7 +45,7 @@
 	<ul class="list">
 		<li class="item" ng-repeat="mc in mediaComments">
 			<div class="item-avatar">
-				<img src="{{mc.userInfo.picture}}" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) : showImage(mc.userInfo.picture))"/>
+				<img ng-src="{{mc.userInfo.picture}}" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) : showImage(mc.userInfo.picture))"/>
 				<h2 class="positive" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) :'' )">@{{mc.userInfo.username}}</h2>
 				<p>{{mc.text.created | dateText}}</p>
 				<p><i class="icon ion-chatbubbles"></i> &nbsp;<span class="font-style-italic">{{mc.text.text}}</span></p>

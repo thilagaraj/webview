@@ -3,7 +3,7 @@
 	<ion-content class="padding">
 	<div class="list card" ng-repeat="user in users" ng-if="!user.isPrivate">
 	  <div class="item item-avatar">
-		<img src="{{user.picture}}" ng-click="showImage(user.picture)">
+		<img ng-src="{{user.picture}}" ng-click="showImage(user.picture)">
 		<h2>@{{user.username}}</h2>
 		<p>{{user.fullName}}</p>
 	  </div>

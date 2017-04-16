@@ -7,16 +7,16 @@
 	<ion-content class="padding">
 <div class="list card" ng-repeat="up in userDetails.postList">
 <div class="item item-avatar">
-    <img src="{{userDetails.userInfo.picture}}" ng-click="showImage(userDetails.userInfo.picture)"/>
+    <img ng-src="{{userDetails.userInfo.picture}}" ng-click="showImage(userDetails.userInfo.picture)"/>
     <h2>{{userDetails.userInfo.fullName}}</h2>
     <p>@{{userDetails.userInfo.username}}</p>
   </div>
 
   <div class="item item-image">
-  ​  <video ng-if="up.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer width-100-percent" poster="{{up.images[0].url}}" >
-		<source src="{{trustSrc(up.videos[0].url)}}" type="video/mp4"/>
+  ​  <video ng-if="up.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer width-100-percent" ng-poster="up.images[0].url" >
+		<source ng-src="{{trustSrc(up.videos[0].url)}}" type="video/mp4"/>
 	</video>
-    <img ng-if="up.mediaType===1" src="{{up.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.images[0].url)" image-lazy-loader="android"/>
+    <img ng-if="up.mediaType===1" ng-src="{{up.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.images[0].url)" image-lazy-loader="android"/>
 	<p  class="item-body">{{up.caption}}</p>
 	
   </div>  

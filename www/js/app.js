@@ -255,4 +255,18 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 		}
 		return shortValue+suffixes[suffixNum];
   };
+}).directive('ngPoster', function() {
+  return {
+    restrict: 'A',
+    scope: {
+      ngPoster: '=',
+    },
+    link: function(scope, element, attrs) {
+      scope.$watch('ngPoster', function(newValue, oldValue) {
+        if (typeof newValue!=='undefined') {
+          element.attr('poster', scope.ngPoster);
+        }
+      });
+    },
+  };
 });
