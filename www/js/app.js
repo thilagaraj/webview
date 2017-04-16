@@ -98,11 +98,15 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 			});	
 		}		
 	}
+	function homeCallback(data){
+		$scope.q="";
+	}
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
 		if(data.stateName!=='home'){
 			$scope.showLoader();
 		}
 		switch(data.stateName){
+			case 'home':homeCallback(data);			
 			case 'listUsers':listUserCallback(data);			
 			case 'viewUser':getUserDetailCallback(data);			
 			case 'viewMedia':getMediaDetailCallback(data);getMediaCommentsCallback(data);			
@@ -171,7 +175,6 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 		$ionicHistory.nextViewOptions({
 			disableBack: true
 		});
-		$scope.q=null;
 		$state.go(state,params);
 	};
 	
