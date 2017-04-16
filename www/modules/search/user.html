@@ -46,5 +46,9 @@
 			</div>
 		</div>
 	 </div>
+	 <ion-infinite-scroll
+	ng-if="userDetails.config.hasMore"
+	on-infinite="loadMoreData(userDetails.userInfo.id,userDetails.config.cursor)" distance="10%">
+	</ion-infinite-scroll>
 	</ion-content>
   </ion-view>
