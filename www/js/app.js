@@ -41,7 +41,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
     }
   });
 })
-.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce){
+.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory){
 	 $scope.showLoader = function() {
 		$ionicLoading.show({
                 content: 'Loading',
@@ -138,28 +138,40 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
         }
 	};
 	var downloadFile=function(file){
-		var url = file;
+		var url = encodeURI(file);
 		var filename = url.split("/").pop();
 		var targetPath = cordova.file.externalRootDirectory + "Download/"+filename;
 		var trustHosts = true;
 		var options = {};
-		 
 		$cordovaFileTransfer.download(url, targetPath, options, trustHosts)
 		  .then(function(result) {
 			  refreshMedia.refresh(targetPath);
 			  $scope.hideLoader();
 			  $cordovaToast.show('File downloaded successfully..', 'short', 'center');	
 		  }, function(err) {
+			 $scope.hideLoader();
 			 $cordovaToast.show('Network Issue, Please check internet connectivity', 'short', 'center');
 		  }, function (progress) {
 			$timeout(function () {
-				var dnldpgs = progress.loaded.toString().substring(0, 2);
-				$scope.downloadProgress = parseInt(dnldpgs);
+				var downloadProgress = (progress.loaded / progress.total) * 100;
+				if (downloadProgress >= 100) {
+					$ionicLoading.hide();
+				}else{
+					$ionicLoading.show({
+						template: '<i class="icon ion-archive"></i> Downloading : ' + Math.floor(downloadProgress) + '%'
+					});	
+				}
+				
 			});
 		  });
 	};
 	
 	$scope.gotoURL=function(state,params){
+		
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$scope.q=null;
 		$state.go(state,params);
 	};
 	

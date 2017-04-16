@@ -79,8 +79,33 @@
 .position-relative{
 	position:relative;
 }
+.width-100-percent{
+	width:100%;
+}
 .font-style-italic{
 	font-style:italic;
+}
+.progress {
+    margin: 0px;
+    height: 8px;
+    background-color: #F1292B!important;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+video::-internal-media-controls-download-button {
+    display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); /* Adjust as needed */
+}
+.item p{
+	text-overflow: inherit;
+    white-space: inherit;
 }
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
