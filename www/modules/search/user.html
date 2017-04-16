@@ -37,6 +37,14 @@
   
 
 </div>
-<div class="alert" ng-if="userDetails && userDetails.postList.length<=0"><b>Nothing posted.</b></div>
+
+ <div class="list card" ng-if="userDetails && userDetails.postList.length<=0">
+		<div class="item">
+			<h2 class="text-center">No post yet from @{{userDetails.userInfo.username}}</h2><br />
+			<div class="text-center">
+				<a class="button button-positive " ng-click="goBack()">Back to List</a>
+			</div>
+		</div>
+	 </div>
 	</ion-content>
   </ion-view>

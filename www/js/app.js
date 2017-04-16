@@ -67,15 +67,17 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	$scope.users={};
 	$scope.serviceLoaded=false;
 	function listUserCallback(data){
-		$scope.q=data.stateParams.q;
-		$http.get('https://quicksta.herokuapp.com/search/user/'+data.stateParams.q).then(function(response){
+		if(data.stateParams && data.stateParams.q){
 			$scope.q=data.stateParams.q;
-			$scope.users=response.data;
-			$scope.hideLoader();
-		});		
+			$http.get('https://quicksta.herokuapp.com/search/user/'+data.stateParams.q).then(function(response){
+				$scope.q=data.stateParams.q;
+				$scope.users=response.data;
+				$scope.hideLoader();
+			});		
+		}
 	}
 	function getUserDetailCallback(data){	
-		if(data.stateParams.user){	
+		if(data.stateParams && data.stateParams.user){	
 			$http.get('https://quicksta.herokuapp.com/user/media/'+data.stateParams.user).then(function(response){			
 				$scope.userDetails=response.data;
 				$scope.hideLoader();
@@ -83,7 +85,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 		}
 	}
 	function getMediaDetailCallback(data){	
-		if(data.stateParams.mediaId){
+		if(data.stateParams && data.stateParams.mediaId){
 			$http.get('https://quicksta.herokuapp.com/media/'+data.stateParams.mediaId).then(function(response){			
 				$scope.mediaDetails=response.data;
 				$scope.hideLoader();
@@ -91,7 +93,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 		}
 	}
 	function getMediaCommentsCallback(data){	
-		if(data.stateParams.mediaId){
+		if(data.stateParams && data.stateParams.mediaId){
 			$http.get('https://quicksta.herokuapp.com/media/comments/'+data.stateParams.mediaId).then(function(response){			
 				$scope.mediaComments=response.data;
 				$scope.hideLoader();
@@ -214,7 +216,9 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
 	}
-	
+	$scope.goBack = function() {
+        $ionicHistory.goBack(-1);
+    };
 }).filter('dateText', function(dateFilter) {
   return function(input,isMS) {
 	  input=(isMS ? input : input*1000);

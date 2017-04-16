@@ -19,6 +19,13 @@
 	  </div>
 	 
 	</div>
-	  
+	 <div class="list card" ng-if="users.length<=0">
+		<div class="item">
+			<h2 class="text-center">No search results found for keyword '{{q}}'</h2><br />
+			<div class="text-center">
+				<a class="button button-positive " ng-click="goBack()">Back to Search</a>
+			</div>
+		</div>
+	 </div>
 	</ion-content>
   </ion-view>
