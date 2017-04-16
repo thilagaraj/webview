@@ -1,5 +1,8 @@
  <ion-view cache-view=true>
 	 <ion-nav-title>Search - {{q}}</ion-nav-title>
+	 <ion-nav-buttons side="right">
+			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
+		</ion-nav-buttons>
 	<ion-content class="padding">
 	<div class="list card" ng-repeat="user in users" ng-if="!user.isPrivate">
 	  <div class="item item-avatar">
