@@ -79,13 +79,13 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	function getUserDetailCallback(data){	
 		if(data.stateParams && data.stateParams.user){	
 			getUserDetail(data.stateParams.user,null);
-			$scope.hideLoader();
 		}
 	}
 	function getUserDetail(user,cursor){
 		$http.get('https://quicksta.herokuapp.com/user/media/'+user+'/'+cursor).then(function(response){
 			if($scope.userDetails && !$scope.userDetails.postList){
 				$scope.userDetails=response.data;
+				$scope.hideLoader();
 			}else{
 				$timeout(function(){
 					angular.forEach(response.data.postList,function(v,k){
