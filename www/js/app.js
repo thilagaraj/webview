@@ -66,6 +66,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	$scope.userDetails={};
 	$scope.users={};
 	$scope.serviceLoaded=false;
+	$scope.tempDownloads=[];
 	function listUserCallback(data){
 		if(data.stateParams && data.stateParams.q){
 			$scope.q=data.stateParams.q;
@@ -135,6 +136,9 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	$scope.$on("$ionicView.loaded", function(event, data){		
 			$scope.hideLoader();	
 	});
+	$scope.addToDownload=function(downloadObj){
+		$scope.tempDownloads.push(downloadObj);
+	}
 	$scope.download=function(file){
 		 $scope.showLoader();
 		var permissions = cordova.plugins.permissions;

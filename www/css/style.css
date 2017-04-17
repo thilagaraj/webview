@@ -107,6 +107,41 @@ video::-webkit-media-controls-panel {
 	text-overflow: inherit;
     white-space: inherit;
 }
+.float-btn{
+    position: fixed;
+    width: 45px;
+    height: 45px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #387ef5;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 2px 2px 3px #555;
+    z-index: 999;
+    font-size: 27px;
+    line-height: 45px;
+}
+.float-btn span{
+	position: absolute;
+    font-size: 9px;
+    background: #e42112;
+    color: #fff;
+    top: 0;
+    height: 16px;
+    line-height: 2;
+    z-index: 12;
+    border-radius: 50%;
+    width: 16px;
+    text-align: center;
+	font-weight:bold;
+}
+.dwnld-btn-header{
+    float: right;
+    position: absolute;
+    top: 30%;
+    right: 10px;
+}
 /* Fix modal backdrop for smaller devices */
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {

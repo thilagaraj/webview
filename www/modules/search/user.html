@@ -8,8 +8,9 @@
 <div class="list card" ng-repeat="up in userDetails.postList">
 <div class="item item-avatar">
     <img ng-src="{{userDetails.userInfo.picture}}" ng-click="showImage(userDetails.userInfo.picture)"/>
-    <h2>{{userDetails.userInfo.fullName}}</h2>
+    <h2>{{userDetails.userInfo.fullName}} </h2>
     <p>@{{userDetails.userInfo.username}}</p>
+	<button class="button button-small button-positive dwnld-btn-header" ng-click="addToDownload({'file':up.images[0].url,'id':up.id})">&nbsp;Add &nbsp;<i class="icon ion-arrow-down-c"></i></button>
   </div>
 
   <div class="item item-image">
@@ -46,9 +47,16 @@
 			</div>
 		</div>
 	 </div>
+	 
+
+	 
 	 <ion-infinite-scroll
 	ng-if="userDetails.config.hasMore"
 	on-infinite="loadMoreData(userDetails.userInfo.id,userDetails.config.cursor)" distance="10%">
 	</ion-infinite-scroll>
 	</ion-content>
+	<a class="float-btn" ng-if="tempDownloads.length>0">
+		<i class="icon ion-arrow-down-c"></i>
+		<span>{{tempDownloads.length}}</span>
+	</a> 
   </ion-view>
