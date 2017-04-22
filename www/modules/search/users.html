@@ -3,7 +3,24 @@
 	 <ion-nav-buttons side="right">
 			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
 		</ion-nav-buttons>
-	<ion-content class="padding">
+		<div class="tabs-striped tabs-top tabs-background-positive tabs-color-light tabs-icon-left">
+		<div class="tabs">
+		  <a class="tab-item active" href="#/listUsers/{{q}}" >
+			<i class="icon ion-ios-people"></i>
+			People
+		  </a>
+		  <a class="tab-item" href="#/searchHashTags/{{q}}">
+			<i class="icon ion-pound"></i>
+			Hashtag
+		  </a>
+		  <a class="tab-item" href="#/searchLocation/{{q}}">
+			<i class="icon ion-ios-location"></i>
+			Location
+		  </a>
+		</div>
+	  </div>
+	<ion-content class="padding hasTabs">
+	
 	<div class="list card" ng-repeat="user in users" ng-if="!user.isPrivate">
 	  <div class="item item-avatar">
 		<img ng-src="{{user.picture}}" ng-click="showImage(user.picture)">

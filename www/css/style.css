@@ -76,6 +76,9 @@
 .padding-left-0{
 	padding-left:0 !important;
 }
+.padding-right-0{
+	padding-right:0 !important;
+}
 .position-relative{
 	position:relative;
 }
@@ -142,10 +145,26 @@ video::-webkit-media-controls-panel {
     top: 30%;
     right: 10px;
 }
-/* Fix modal backdrop for smaller devices */
+.bar-no-border{
+	border:0;
+}
+.hasTabs.has-header{
+	top:77px;
+}
+.tabs-icon-left > .tabs .tab-item{
+	font-size:14px;
+}
+.font-14{
+	font-weight:normal;
+	font-size:14px;
+}
+.locations .item-icon-left .icon{
+	left:-5px;	
+}
+
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {
-    opacity: .5;
+    opacity: .7;
   }
   .modal-backdrop-bg {
     -webkit-transition: opacity 300ms ease-in-out;

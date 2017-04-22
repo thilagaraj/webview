@@ -1,0 +1,62 @@
+
+ <ion-view cache-view=true>
+	 <ion-nav-title ng-show="location"><i class="icon ion-location"></i>&nbsp;&nbsp;{{location}}</ion-nav-title>
+		<ion-nav-buttons side="right">
+			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
+		</ion-nav-buttons>
+	<ion-content class="padding">
+<div class="list card" ng-repeat="up in locationDetails.postList">
+<div class="item item-avatar">
+    <img ng-src="{{up.userInfo.picture}}" ng-click="showImage(up.userInfo.picture)"/>
+    <h2>{{up.userInfo.fullName}} </h2>
+    <p>@{{up.userInfo.username}}</p>
+	<!--<button class="button button-small button-positive dwnld-btn-header" ng-click="addToDownload({'file':up.images[0].url,'id':up.id})">&nbsp;Add &nbsp;<i class="icon ion-arrow-down-c"></i></button>-->
+  </div>
+
+  <div class="item item-image">
+  ​  <video ng-if="up.post.mediaType===2" controls="controls" preload="metadata"  webkit-playsinline="webkit-playsinline" class="videoPlayer width-100-percent" ng-poster="up.post.images[0].url" >
+		<source ng-src="{{trustSrc(up.post.videos[0].url)}}" type="video/mp4"/>
+	</video>
+    <img ng-if="up.post.mediaType===1" ng-src="{{up.post.images[0].url}}" lazy-scroll-resize="false" ng-click="showImage(up.post.images[0].url)" image-lazy-loader="android"/>
+	<p  class="item-body">{{up.post.caption}}</p>
+	
+  </div>  
+	<div class="row">
+	  <div class="col col-20">
+		<a class="item item-icon-left assertive custom-assertive " ng-click="download((up.post.mediaType===2 ? trustSrc(up.post.videos[0].url) : up.post.images[0].url))" >
+		<i class="icon ion-archive"></i></a>
+	  </div>
+	   <div class="col col-20"><a ng-click="nativeShare(up.post.images[0].url)" class="item item-icon-left assertive custom-assertive padding-left-0" >
+		<i class="icon ion-share"></i></a></div>
+	   <div class="col col-20"><a  class="item assertive custom-assertive padding-10 padding-left-0">{{up.post.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
+	   <div class="col col-20"><a class="item assertive custom-assertive padding-10 padding-left-0">{{up.post.commentCount}} <i class="icon ion-chatbubbles"></i></a></div>
+	   <div class="col col-20">
+		<a class="item item-icon-right assertive custom-assertive padding-left-0" href="#/viewMedia/{{up.post.id}}">
+		<i class="icon ion-arrow-right-c"></i></a>
+	  </div>
+	</div>
+  
+
+</div>
+
+ <div class="list card" ng-if="locationDetails && locationDetails.postList.length<=0">
+		<div class="item">
+			<h2 class="text-center">No post yet for location - {{location}}</h2><br />
+			<div class="text-center">
+				<a class="button button-positive " ng-click="goBack()">Back to List</a>
+			</div>
+		</div>
+	 </div>
+	 
+
+	 
+	 <ion-infinite-scroll
+	ng-if="locationDetails.config.hasMore"
+	on-infinite="loadMoreLocationData(id,locationDetails.config.cursor)" distance="10%">
+	</ion-infinite-scroll>
+	</ion-content>
+	<a class="float-btn" ng-if="tempDownloads.length>0">
+		<i class="icon ion-arrow-down-c"></i>
+		<span>{{tempDownloads.length}}</span>
+	</a> 
+  </ion-view>

@@ -1,0 +1,38 @@
+ <ion-view cache-view=true>
+	 <ion-nav-title>Search - {{q}}</ion-nav-title>
+	 <ion-nav-buttons side="right">
+			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
+		</ion-nav-buttons>
+		<div class="tabs-striped tabs-top tabs-background-positive tabs-color-light tabs-icon-left">
+		<div class="tabs">
+		  <a class="tab-item " href="#/listUsers/{{q}}" >
+			<i class="icon ion-ios-people"></i>
+			People
+		  </a>
+		  <a class="tab-item active" href="#/searchHashTags/{{q}}">
+			<i class="icon ion-pound"></i>
+			Hashtag
+		  </a>
+		  <a class="tab-item" href="#/searchLocation/{{q}}">
+			<i class="icon ion-ios-location"></i>
+			Location
+		  </a>
+		</div>
+	  </div>
+	<ion-content class="padding hasTabs">
+		<div class="row card" ng-repeat="ht in hashTags" ng-if="ht.name" ng-click="gotoURL('viewTag',{'tag':ht.name})">
+			<div class="col col-70"><a class="positive item custom-assertive">#{{ht.name}}</a></div>
+			<div class="col col-30 text-right"><a class="item positive custom-assertive"><span class="icon ion-android-image"></span>&nbsp;&nbsp;{{ht.mediaCount | abbreviated}} Posts</a></div>
+		</div>
+		
+		
+	 <div class="list card" ng-if="hashTags.length<=0">
+		<div class="item">
+			<h2 class="text-center">No search results found for keyword '{{q}}'</h2><br />
+			<div class="text-center">
+				<a class="button button-positive " ng-click="goBack()">Back to Search</a>
+			</div>
+		</div>
+	 </div>
+	</ion-content>
+  </ion-view>

@@ -26,11 +26,11 @@
 	  
 	</div>
 </div>
-<div class="list card" ng-if="mediaDetails && mediaDetails.location && mediaDetails.location.length>0">
+<div class="list card" ng-if="mediaDetails && mediaDetails.location && mediaDetails.location.title" ng-click="gotoURL('viewLocation',{'id':mediaDetails.location.id,'location':mediaDetails.location.title})">
 	<div class="item">
 		<div class="row">
 			<div class="col col-20">
-				<a class="item item-icon-left assertive custom-assertive">
+				<a class="item item-icon-left assertive custom-assertive padding-left-0 padding-right-0">
 				<i class="icon ion-android-pin"></i></a>
 			</div>
 			<div class="col">
@@ -38,7 +38,7 @@
 				<p>{{mediaDetails.location.address}}, {{mediaDetails.location.city}}</p>
 			</div>
 		</div>
-	</div>
+	</div>	
 </div>
 
 <div class="card" ng-if="mediaComments && mediaComments.length>0">

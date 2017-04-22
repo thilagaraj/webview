@@ -1,5 +1,5 @@
-angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
-.config(function($stateProvider, $urlRouterProvider) {
+angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','ionic-native-transitions'])
+.config(function($stateProvider, $urlRouterProvider,$ionicNativeTransitionsProvider) {
 
   $stateProvider
     .state('home', {
@@ -9,20 +9,57 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
     })
 	.state('listUsers', {
       url: "/listUsers/:q",
-	  controller:'homeController',      
-      templateUrl: "modules/search/userlist.html"
+	  controller:'homeController', 
+		nativeTransitions: {
+			"type": "fade",
+			"duration": 100
+		}	,  
+      templateUrl: "modules/search/users.html"
     })
 	.state('viewUser', {
       url: "/viewUser/:user",
 	  controller:'homeController',      
-      templateUrl: "modules/search/user.html"
+      templateUrl: "modules/media/user.html"
+    })
+	.state('viewTag', {
+      url: "/viewTag/:tag",
+	  controller:'homeController',      
+      templateUrl: "modules/media/hashtag.html"
+    })
+	.state('viewLocation', {
+      url: "/viewLocation/:id/:location",
+	  controller:'homeController',      
+      templateUrl: "modules/media/location.html"
     })
 	.state('viewMedia', {
       url: "/viewMedia/:mediaId",
 	  controller:'homeController',      
       templateUrl: "modules/media/media.html"
     })
+	.state('searchHashTags', {
+      url: "/searchHashTags/:q",
+	  controller:'homeController',      
+      templateUrl: "modules/search/hashtags.html"
+    })
+	.state('searchLocation', {
+      url: "/searchLocation/:q",
+	  controller:'homeController',      
+      templateUrl: "modules/search/locations.html"
+    })
 	$urlRouterProvider.otherwise("/home");
+	
+	$ionicNativeTransitionsProvider.setDefaultBackTransition({
+        type: 'slide',
+        direction: 'left',
+		fixedPixelsTop:0
+    });
+	
+	$ionicNativeTransitionsProvider.setDefaultTransition({
+        type: 'fade',
+		duration:600	
+    });
+	
+	
 })
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -41,7 +78,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
     }
   });
 })
-.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory){
+.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory,$ionicPlatform){
 	 $scope.showLoader = function() {
 		$ionicLoading.show({
                 content: 'Loading',
@@ -54,6 +91,32 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	  $scope.hideLoader = function(){
 		$ionicLoading.hide()
 	  };
+	 
+	/*For Exit prevent*/
+	var countTimerForCloseApp = false;
+	$ionicPlatform.registerBackButtonAction(function(e) {
+	 e.preventDefault();
+	 function showConfirm() {
+	  if (countTimerForCloseApp) {
+	   ionic.Platform.exitApp();
+	  } else {
+	   countTimerForCloseApp = true;
+	  $cordovaToast.show('Press again to exit', 'short', 'bottom');	
+	   $timeout(function() {
+		countTimerForCloseApp = false;
+	   }, 2000);
+	  }
+
+	 };
+	 if ($ionicHistory.backView()) {	  
+	  $ionicHistory.backView().go();
+	 } else {	 
+	  showConfirm();
+	 }
+
+	 return false;
+	}, 101);
+	/*For Exit prevent*/
 	
 	$scope.users={};	
 	$scope.q=null;	
@@ -64,6 +127,8 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 		}
 	};
 	$scope.userDetails={};
+	$scope.tagDetails={};
+	$scope.locationDetails={};
 	$scope.users={};
 	$scope.serviceLoaded=false;
 	$scope.tempDownloads=[];
@@ -82,6 +147,19 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 			getUserDetail(data.stateParams.user,null);
 		}
 	}
+	function getTagDetailCallback(data){	
+		if(data.stateParams && data.stateParams.tag){
+			$scope.tag=data.stateParams.tag;			
+			getTagDetail(data.stateParams.tag,null);
+		}
+	}
+	function getLocationDetailCallback(data){	
+		if(data.stateParams && data.stateParams.id){
+			$scope.id=data.stateParams.id;
+			$scope.location=data.stateParams.location;
+			getLocationDetail(data.stateParams.id,null);
+		}
+	}
 	function getUserDetail(user,cursor){
 		$http.get('https://quicksta.herokuapp.com/user/media/'+user+'/'+cursor).then(function(response){
 			if($scope.userDetails && !$scope.userDetails.postList){
@@ -93,6 +171,38 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 						$scope.userDetails.postList.push(v);
 					});				
 					$scope.userDetails.config=response.data.config;
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				},1000);
+			}
+		});	
+	}
+	function getTagDetail(tag,cursor){
+		$http.get('https://quicksta.herokuapp.com/hashtag/media/'+tag+'/'+cursor).then(function(response){
+			if($scope.tagDetails && !$scope.tagDetails.postList){
+				$scope.tagDetails=response.data;
+				$scope.hideLoader();
+			}else{
+				$timeout(function(){
+					angular.forEach(response.data.postList,function(v,k){
+						$scope.tagDetails.postList.push(v);
+					});				
+					$scope.tagDetails.config=response.data.config;
+					$scope.$broadcast('scroll.infiniteScrollComplete');
+				},1000);
+			}
+		});	
+	}
+	function getLocationDetail(id,cursor){
+		$http.get('https://quicksta.herokuapp.com/location/media/'+id+'/'+cursor).then(function(response){
+			if($scope.locationDetails && !$scope.locationDetails.postList){
+				$scope.locationDetails=response.data;
+				$scope.hideLoader();
+			}else{
+				$timeout(function(){
+					angular.forEach(response.data.postList,function(v,k){
+						$scope.locationDetails.postList.push(v);
+					});				
+					$scope.locationDetails.config=response.data.config;
 					$scope.$broadcast('scroll.infiniteScrollComplete');
 				},1000);
 			}
@@ -114,25 +224,54 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 			});	
 		}		
 	}
+	function searchHashTagsCallback(data){
+		if(data.stateParams && data.stateParams.q){
+			$scope.q=data.stateParams.q;	
+			$http.get('https://quicksta.herokuapp.com/search/hastag/'+data.stateParams.q).then(function(response){			
+				$scope.hashTags=response.data;
+				$scope.hideLoader();
+			});	
+		}		
+	}
+	function searchLocationCallback(data){
+		if(data.stateParams && data.stateParams.q ){
+			$scope.q=data.stateParams.q;	 
+			$http.get('https://quicksta.herokuapp.com/search/location/'+data.stateParams.q).then(function(response){			
+				$scope.locations=response.data;
+				$scope.hideLoader();
+			});	
+		}		
+	}
 	function homeCallback(data){
 		$scope.q="";
 	}
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
-		if(data.stateName!=='home'){
+		if(data.stateName!=='home' && data.direction!=='back'){
 			$scope.showLoader();
 		}
-		switch(data.stateName){
-			case 'home':homeCallback(data);			
-			case 'listUsers':listUserCallback(data);			
-			case 'viewUser':getUserDetailCallback(data);			
-			case 'viewMedia':getMediaDetailCallback(data);getMediaCommentsCallback(data);			
+		if(data.direction!=='back'){
+			switch(data.stateName){
+				case 'home':homeCallback(data);break;			
+				case 'listUsers':listUserCallback(data);break;				
+				case 'viewUser':getUserDetailCallback(data);break;				
+				case 'viewTag':getTagDetailCallback(data);break;				
+				case 'viewLocation':getLocationDetailCallback(data);break;				
+				case 'viewMedia':getMediaDetailCallback(data);getMediaCommentsCallback(data);break;				
+				case 'searchHashTags':searchHashTagsCallback(data);break;			
+				case 'searchLocation':searchLocationCallback(data);break;	
+			}
 		}
 	});
 	
 	$scope.loadMoreData=function(user,cursor){
 		getUserDetail(user,cursor);
 	};	
-	
+	$scope.loadMoreTagData=function(tag,cursor){
+		getTagDetail(tag,cursor);
+	};
+	$scope.loadMoreLocationData=function(id,cursor){
+		getTagDetail(id,cursor);
+	};
 	$scope.$on("$ionicView.loaded", function(event, data){		
 			$scope.hideLoader();	
 	});
@@ -195,10 +334,11 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize'])
 	};
 	
 	$scope.gotoURL=function(state,params){
-		
-		$ionicHistory.nextViewOptions({
-			disableBack: true
-		});
+		if(state==='home'){
+			$ionicHistory.nextViewOptions({
+				disableBack: true
+			});
+		}
 		$state.go(state,params);
 	};
 	
