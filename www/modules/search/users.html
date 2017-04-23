@@ -1,6 +1,7 @@
  <ion-view cache-view=true>
 	 <ion-nav-title>Search - {{q}}</ion-nav-title>
 	 <ion-nav-buttons side="right">
+			<button ng-click="gotoURL('about')" class="button button-icon icon ion-ios-information-outline"></button>
 			<button ng-click="gotoURL('home')" class="button button-icon icon ion-android-search"></button>
 		</ion-nav-buttons>
 		<div class="tabs-striped tabs-top tabs-background-positive tabs-color-light tabs-icon-left">
@@ -24,8 +25,8 @@
 	<div class="list card" ng-repeat="user in users" ng-if="!user.isPrivate">
 	  <div class="item item-avatar">
 		<img ng-src="{{user.picture}}" ng-click="showImage(user.picture)">
-		<h2>@{{user.username}}</h2>
-		<p>{{user.fullName}}</p>
+		<h2 ng-click="gotoURL('viewUser',{'user':user.id})">@{{user.username}}</h2>
+		<p ng-click="gotoURL('viewUser',{'user':user.id})">{{user.fullName}}</p>
 	  </div>
 	  <div class="row">
 		<div class="col col-80">

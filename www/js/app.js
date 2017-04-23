@@ -6,6 +6,10 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
       url: "/home",
 	  controller:'homeController',      
       templateUrl: "modules/home/home.html"
+    }).state('about', {
+      url: "/about",
+	  controller:'homeController',      
+      templateUrl: "modules/home/about.html"
     })
 	.state('listUsers', {
       url: "/listUsers/:q",
@@ -78,7 +82,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
     }
   });
 })
-.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory,$ionicPlatform){
+.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory,$ionicPlatform,$ionicScrollDelegate){
 	 $scope.showLoader = function() {
 		$ionicLoading.show({
                 content: 'Loading',
@@ -248,7 +252,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 		$scope.q="";
 	}
 	$scope.$on("$ionicView.beforeEnter", function(event, data){
-		if(data.stateName!=='home' && data.direction!=='back'){
+		if(data.stateName!=='home' && data.stateName!=='about' && data.direction!=='back'){
 			$scope.showLoader();
 		}
 		if(data.direction!=='back'){
@@ -336,7 +340,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 	};
 	
 	$scope.gotoURL=function(state,params){
-		if(state==='home'){
+		if(state==='home' && state==='about'){
 			$ionicHistory.nextViewOptions({
 				disableBack: true
 			});
@@ -378,13 +382,14 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 		if(type==='likes'){
 		  $scope.likesModal.hide();
 		}
-		
+		$ionicScrollDelegate.zoomTo(1, false, 0, 0);
     };
 
    
     $scope.$on('$destroy', function() {
       $scope.modal.remove();
       $scope.likesModal.remove();
+	  $ionicScrollDelegate.zoomTo(1, false, 0, 0);
     });
 	
 	$scope.nativeShare=function(file){
