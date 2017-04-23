@@ -12,7 +12,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 	  controller:'homeController', 
 		nativeTransitions: {
 			"type": "fade",
-			"duration": 100
+			"duration": 500
 		}	,  
       templateUrl: "modules/search/users.html"
     })
@@ -56,7 +56,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 	
 	$ionicNativeTransitionsProvider.setDefaultTransition({
         type: 'fade',
-		duration:600	
+		duration:400	
     });
 	
 	
@@ -122,8 +122,10 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 	$scope.q=null;	
 	$scope.search=function(q){
 		if(q){
-			$scope.q=q;		
-			$state.go('listUsers',{'q':q});
+			$scope.q=q;	
+			$timeout(function(){
+				$state.go('listUsers',{'q':q});
+			},100);
 		}
 	};
 	$scope.userDetails={};
@@ -270,7 +272,7 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 		getTagDetail(tag,cursor);
 	};
 	$scope.loadMoreLocationData=function(id,cursor){
-		getTagDetail(id,cursor);
+		getLocationDetail(id,cursor);
 	};
 	$scope.$on("$ionicView.loaded", function(event, data){		
 			$scope.hideLoader();	
@@ -353,19 +355,36 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 	  }).then(function(modal) {
 		$scope.modal = modal;
 	  });
-	  
-	$scope.openModal = function() {
-      $scope.modal.show();
+	 $ionicModal.fromTemplateUrl('modules/media/likes-modal.html', {
+		scope: $scope,
+		animation: 'fade-in'
+	  }).then(function(modal) {
+		$scope.likesModal = modal;
+	  }); 
+	$scope.openModal = function(type,mediaid) {
+      if(!type){
+		$scope.modal.show();
+	  }
+	  if(type==='likes' && mediaid!=''){
+		$scope.likesModal.show();
+	  }
     };
 
-    $scope.closeModal = function() {
-	  $scope.imgSRC="";
-      $scope.modal.hide();
+    $scope.closeModal = function(type) {	
+		if(!type){
+		  $scope.imgSRC="";
+		  $scope.modal.hide();
+		}
+		if(type==='likes'){
+		  $scope.likesModal.hide();
+		}
+		
     };
 
    
     $scope.$on('$destroy', function() {
       $scope.modal.remove();
+      $scope.likesModal.remove();
     });
 	
 	$scope.nativeShare=function(file){
@@ -431,4 +450,21 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
       });
     },
   };
-});
+}).directive('hashtagify', ['$timeout', '$compile',
+    function($timeout, $compile) {
+        return {
+            restrict: 'A',            
+            link: function(scope, element, attrs) {
+                $timeout(function() {
+                    var html = element.html();
+                    if (html === '') {
+                        return false;
+                    } 
+                    html = html.replace(/(^|\s)*#(\w+)/g, '$1<a class="hashtagify" href="#/viewTag/$2" class="hashtag">#$2</a>');
+                    element.html(html);
+                    $compile(element.contents())(scope);
+                }, 0);
+            }
+        };
+    }
+]);

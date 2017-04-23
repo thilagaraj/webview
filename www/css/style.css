@@ -108,7 +108,7 @@ video::-webkit-media-controls-panel {
 }
 .item p{
 	text-overflow: inherit;
-    white-space: inherit;
+    white-space: pre-wrap;
 }
 .float-btn{
     position: fixed;
@@ -146,10 +146,16 @@ video::-webkit-media-controls-panel {
     right: 10px;
 }
 .bar-no-border{
-	border:0;
+	border:0 !important;
+}
+.tabs-striped.tabs-background-positive .tabs{
+	border-top:0 !important;
 }
 .hasTabs.has-header{
-	top:77px;
+	top:85px;
+}
+.bar.bar-positive{
+	border-color: #387ef5;
 }
 .tabs-icon-left > .tabs .tab-item{
 	font-size:14px;
@@ -161,7 +167,18 @@ video::-webkit-media-controls-panel {
 .locations .item-icon-left .icon{
 	left:-5px;	
 }
-
+.tabs-top.tabs-striped.tabs-icon-left .tab-item{
+	margin-top:0;
+}
+.tabs-top > .tabs, .tabs.tabs-top{
+	top:54px;
+}
+a.hashtagify{
+	text-decoration:none;
+}
+.cs{
+	transform:none !important;
+}
 @media (max-width: 679px) {
   .active .modal-backdrop-bg {
     opacity: .7;

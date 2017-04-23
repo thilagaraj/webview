@@ -12,7 +12,7 @@
 		<source ng-src="{{trustSrc(mediaDetails.postInfo.videos[0].url)}}" type="video/mp4"/>
 	</video>
     <img ng-if="mediaDetails.postInfo.mediaType===1"  ng-src="{{mediaDetails.postInfo.images[0].url}}" ng-click="showImage(mediaDetails.postInfo.images[0].url)"/>
-	<p  class="item-body">{{mediaDetails.postInfo.caption}}</p>	
+	<p  class="item-body" hashtagify>{{mediaDetails.postInfo.caption}}</p>	
   </div>  
 	<div class="row">
 	   <div class="col"><a  class="item assertive custom-assertive padding-10 padding-left-0">{{mediaDetails.postInfo.likeCount|abbreviated}} <i class="icon ion-heart"></i></a></div>
@@ -48,7 +48,7 @@
 				<img ng-src="{{mc.userInfo.picture}}" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) : showImage(mc.userInfo.picture))"/>
 				<h2 class="positive" ng-click="(!mc.userInfo.isPrivate ? gotoURL('viewUser',{'user':mc.userInfo.id}) :'' )">@{{mc.userInfo.username}}</h2>
 				<p>{{mc.text.created | dateText}}</p>
-				<p><i class="icon ion-chatbubbles"></i> &nbsp;<span class="font-style-italic">{{mc.text.text}}</span></p>
+				<p><i class="icon ion-chatbubbles"></i> &nbsp;<span class="font-style-italic" hashtagify>{{mc.text.text}}</span></p>
 			</div>
 		</li>
 	</ul>	
