@@ -82,7 +82,13 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
     }
   });
 })
-.controller('homeController',function($scope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory,$ionicPlatform,$ionicScrollDelegate){
+.controller('homeController',function($scope,$rootScope,$http,$ionicLoading,$state,$cordovaFileTransfer,$cordovaToast, $ionicModal,$sce,$timeout,$ionicHistory,$ionicPlatform,$ionicScrollDelegate,$cordovaNetwork){
+		document.addEventListener("deviceready", function () {
+			$rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+				$scope.hideLoader();
+				$cordovaToast.show('Network Issue, Please check internet connectivity', 'long', 'center');
+			});
+		}, false);
 	 $scope.showLoader = function() {
 		$ionicLoading.show({
                 content: 'Loading',
@@ -382,7 +388,11 @@ angular.module('quicksta', ['ionic','ngCordova','ionicLazyLoad','ngSanitize','io
 		if(type==='likes'){
 		  $scope.likesModal.hide();
 		}
-		$ionicScrollDelegate.zoomTo(1, false, 0, 0);
+		
+		$timeout(function(){
+			$ionicScrollDelegate.zoomTo(1, false, 0, 0);
+		},50);
+		
     };
 
    

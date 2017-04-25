@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.quicksta" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.pazhanam.quicksta" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Quicksta</name>
   <description>
         Quicksta - Instagram quick search tool
@@ -8,7 +8,10 @@
       Thilagaraj
     </author>
   <content src="index.html"/>
-  <access origin="*"/>
+  <access origin="*" subdomains="true"/>
+  <allow-navigation href="https://*/*" />
+  <allow-navigation href="http://*/*" />
+  <allow-navigation href="data:*" />
   <allow-intent href="mailto:*" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
